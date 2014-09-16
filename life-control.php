@@ -1,12 +1,12 @@
 <?php
 /*
-	Plugin Name: My Series
+	Plugin Name: Life Control
 	Plugin URI: 
 	Description: 
 	Author: Marko Heijnen
 	Version: 1.0
 	Author URI: http://markoheijnen.com
-	Text Domain: my-series
+	Text Domain: life-control
 	Domain Path: /language
  */
 
@@ -14,7 +14,7 @@ include 'posttypes/episodes.php';
 include 'posttypes/series.php';
 include 'inc/watched.php';
 
-class My_Series {
+class Life_Control {
 	private $episodes;
 	private $series;
 
@@ -52,6 +52,7 @@ class My_Series {
 
 		$updater = new My_Series_Updater;
 	}
+
 }
 
-new My_Series();
+$GLOBALS['life_control'] = new Life_Control();

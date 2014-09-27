@@ -9,19 +9,19 @@ class Life_Control_Episodes {
 
 	public function register_post_type() {
 		$labels = array(
-			'name'               => _x( 'Episodes', 'post type general name', 'my-series' ),
-			'singular_name'      => _x( 'Episode', 'post type singular name', 'my-series' ),
-			'add_new'            => _x( 'Add new', 'add new episode', 'my-series' ),
-			'add_new_item'       => __( 'Add new episode', 'my-series' ),
-			'edit_item'          => __( 'Edit episode', 'my-series' ),
-			'new_item'           => __( 'New episode', 'my-series' ),
-			'all_items'          => __( 'All episodes', 'my-series' ),
-			'view_item'          => __( 'View episode', 'my-series' ),
-			'search_items'       => __( 'Search episodes', 'my-series' ),
-			'not_found'          => __( 'No episodes found', 'my-series' ),
-			'not_found_in_trash' => __( 'No episodes found in trash', 'my-series' ), 
+			'name'               => _x( 'Episodes', 'post type general name', 'life-control' ),
+			'singular_name'      => _x( 'Episode', 'post type singular name', 'life-control' ),
+			'add_new'            => _x( 'Add new', 'add new episode', 'life-control' ),
+			'add_new_item'       => __( 'Add new episode', 'life-control' ),
+			'edit_item'          => __( 'Edit episode', 'life-control' ),
+			'new_item'           => __( 'New episode', 'life-control' ),
+			'all_items'          => __( 'All episodes', 'life-control' ),
+			'view_item'          => __( 'View episode', 'life-control' ),
+			'search_items'       => __( 'Search episodes', 'life-control' ),
+			'not_found'          => __( 'No episodes found', 'life-control' ),
+			'not_found_in_trash' => __( 'No episodes found in trash', 'life-control' ), 
 			'parent_item_colon'  => '',
-			'menu_name'          => __( 'Episodes', 'my-series' )
+			'menu_name'          => __( 'Episodes', 'life-control' )
 		);
 
 		$args = array(
@@ -45,19 +45,19 @@ class Life_Control_Episodes {
 
 		$messages['episode'] = array(
 			0 => '', // Unused. Messages start at index 1.
-			1 => sprintf( __( 'Episode updated. <a href="%s">View episode</a>', 'my-series' ), esc_url( get_permalink( $post_ID ) ) ),
-			2 => __( 'Custom field updated.', 'my-series' ),
-			3 => __( 'Custom field deleted.', 'my-series' ),
-			4 => __( 'Episode updated.', 'my-series' ),
+			1 => sprintf( __( 'Episode updated. <a href="%s">View episode</a>', 'life-control' ), esc_url( get_permalink( $post_ID ) ) ),
+			2 => __( 'Custom field updated.', 'life-control' ),
+			3 => __( 'Custom field deleted.', 'life-control' ),
+			4 => __( 'Episode updated.', 'life-control' ),
 			/* translators: %s: date and time of the revision */
-			5 => isset( $_GET['revision'] ) ? sprintf( __('Episode restored to revision from %s', 'my-series' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-			6 => sprintf( __( 'Episode published. <a href="%s">View episode</a>', 'my-series' ), esc_url( get_permalink( $post_ID ) ) ),
-			7 => __( 'Episode saved.', 'my-series' ),
-			8 => sprintf( __( 'Episode submitted. <a target="_blank" href="%s">Preview episode</a>', 'my-series'), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
-			9 => sprintf( __( 'Episode scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview episode</a>', 'my-series' ),
+			5 => isset( $_GET['revision'] ) ? sprintf( __('Episode restored to revision from %s', 'life-control' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+			6 => sprintf( __( 'Episode published. <a href="%s">View episode</a>', 'life-control' ), esc_url( get_permalink( $post_ID ) ) ),
+			7 => __( 'Episode saved.', 'life-control' ),
+			8 => sprintf( __( 'Episode submitted. <a target="_blank" href="%s">Preview episode</a>', 'life-control'), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
+			9 => sprintf( __( 'Episode scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview episode</a>', 'life-control' ),
 				// translators: Publish box date format, see http://php.net/date
 				date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID ) ) ),
-			10 => sprintf( __( 'Episode draft updated. <a target="_blank" href="%s">Preview episode</a>', 'my-series' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
+			10 => sprintf( __( 'Episode draft updated. <a target="_blank" href="%s">Preview episode</a>', 'life-control' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
 		);
 
 		return $messages;

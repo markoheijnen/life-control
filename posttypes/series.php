@@ -14,19 +14,19 @@ class Life_Control_Series {
 
 	public function register_post_type() {
 		$labels = array(
-			'name'               => _x( 'Series', 'post type general name', 'my-series' ),
-			'singular_name'      => _x( 'Serie', 'post type singular name', 'my-series' ),
-			'add_new'            => _x( 'Add new', 'add new serie', 'my-series' ),
-			'add_new_item'       => __( 'Add new serie', 'my-series' ),
-			'edit_item'          => __( 'Edit serie', 'my-series' ),
-			'new_item'           => __( 'New serie', 'my-series' ),
-			'all_items'          => __( 'All series', 'my-series' ),
-			'view_item'          => __( 'View serie', 'my-series' ),
-			'search_items'       => __( 'Search series', 'my-series' ),
-			'not_found'          => __( 'No series found', 'my-series' ),
-			'not_found_in_trash' => __( 'No series found in trash', 'my-series' ), 
+			'name'               => _x( 'Series', 'post type general name', 'life-control' ),
+			'singular_name'      => _x( 'Serie', 'post type singular name', 'life-control' ),
+			'add_new'            => _x( 'Add new', 'add new serie', 'life-control' ),
+			'add_new_item'       => __( 'Add new serie', 'life-control' ),
+			'edit_item'          => __( 'Edit serie', 'life-control' ),
+			'new_item'           => __( 'New serie', 'life-control' ),
+			'all_items'          => __( 'All series', 'life-control' ),
+			'view_item'          => __( 'View serie', 'life-control' ),
+			'search_items'       => __( 'Search series', 'life-control' ),
+			'not_found'          => __( 'No series found', 'life-control' ),
+			'not_found_in_trash' => __( 'No series found in trash', 'life-control' ), 
 			'parent_item_colon'  => '',
-			'menu_name'          => __( 'Series', 'my-series' )
+			'menu_name'          => __( 'Series', 'life-control' )
 		);
 
 		$args = array(
@@ -50,19 +50,19 @@ class Life_Control_Series {
 
 		$messages['serie'] = array(
 			0 => '', // Unused. Messages start at index 1.
-			1 => sprintf( __( 'Serie updated. <a href="%s">View serie</a>', 'my-series' ), esc_url( get_permalink( $post_ID ) ) ),
-			2 => __( 'Custom field updated.', 'my-series' ),
-			3 => __( 'Custom field deleted.', 'my-series' ),
-			4 => __( 'Serie updated.', 'my-series' ),
+			1 => sprintf( __( 'Serie updated. <a href="%s">View serie</a>', 'life-control' ), esc_url( get_permalink( $post_ID ) ) ),
+			2 => __( 'Custom field updated.', 'life-control' ),
+			3 => __( 'Custom field deleted.', 'life-control' ),
+			4 => __( 'Serie updated.', 'life-control' ),
 			/* translators: %s: date and time of the revision */
-			5 => isset( $_GET['revision'] ) ? sprintf( __('Serie restored to revision from %s', 'my-series' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-			6 => sprintf( __( 'Serie published. <a href="%s">View serie</a>', 'my-series' ), esc_url( get_permalink( $post_ID ) ) ),
-			7 => __( 'Serie saved.', 'my-series' ),
-			8 => sprintf( __( 'Serie submitted. <a target="_blank" href="%s">Preview serie</a>', 'my-series'), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
-			9 => sprintf( __( 'Serie scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview serie</a>', 'my-series' ),
+			5 => isset( $_GET['revision'] ) ? sprintf( __('Serie restored to revision from %s', 'life-control' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+			6 => sprintf( __( 'Serie published. <a href="%s">View serie</a>', 'life-control' ), esc_url( get_permalink( $post_ID ) ) ),
+			7 => __( 'Serie saved.', 'life-control' ),
+			8 => sprintf( __( 'Serie submitted. <a target="_blank" href="%s">Preview serie</a>', 'life-control'), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
+			9 => sprintf( __( 'Serie scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview serie</a>', 'life-control' ),
 				// translators: Publish box date format, see http://php.net/date
 				date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID ) ) ),
-			10 => sprintf( __( 'Serie draft updated. <a target="_blank" href="%s">Preview serie</a>', 'my-series' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
+			10 => sprintf( __( 'Serie draft updated. <a target="_blank" href="%s">Preview serie</a>', 'life-control' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
 		);
 
 		return $messages;
@@ -72,31 +72,31 @@ class Life_Control_Series {
 	public function add_meta_boxes() {
 		add_meta_box(
 			'series_info',
-			__( 'My Post Section Title', 'my-series' ),
+			__( 'My Post Section Title', 'life-control' ),
 			array( $this, 'metabox_info' ),
 			'serie'
 		);
 	}
 
 	public function metabox_info( $post ) {
-		wp_nonce_field( plugin_basename( __FILE__ ), 'my-series-series-nonce' );
+		wp_nonce_field( plugin_basename( __FILE__ ), 'life-control-series-nonce' );
 
 		$imdb_id       = get_post_meta( $post->ID, 'imdb_id', true );
 		$tvrage_id     = get_post_meta( $post->ID, 'tvrage_id', true );
 		$streamallthis = get_post_meta( $post->ID, 'streamallthis_name', true );
 
 		echo '<p><label for="imdb_id">';
-			_e( 'IMDB ID', 'my-series' );
+			_e( 'IMDB ID', 'life-control' );
 		echo '</label> ';
 		echo '<input type="text" id="imdb_id" class="regular-text" name="imdb_id" value="' . esc_attr( $imdb_id ) . '" /></p>';
 
 		echo '<p><label for="tvrage_id">';
-			_e( 'TVrage ID', 'my-series' );
+			_e( 'TVrage ID', 'life-control' );
 		echo '</label> ';
 		echo '<input type="text" id="tvrage_id" class="regular-text" name="tvrage_id" value="' . esc_attr( $tvrage_id ) . '" /></p>';
 
 		echo '<p><label for="streamallthis">';
-			_e( 'Streamallthis url name', 'my-series' );
+			_e( 'Streamallthis url name', 'life-control' );
 		echo '</label> ';
 		echo '<input type="text" id="streamallthis" class="regular-text" name="streamallthis" value="' . esc_attr( $streamallthis ) . '" /></p>';
 	}
@@ -126,7 +126,7 @@ class Life_Control_Series {
 	}
 
 	public function save_meta( $post_id, $post ) {
-		if ( ! isset( $_POST['my-series-series-nonce'] ) || ! wp_verify_nonce( $_POST['my-series-series-nonce'], plugin_basename( __FILE__ ) ) ) {
+		if ( ! isset( $_POST['life-control-series-nonce'] ) || ! wp_verify_nonce( $_POST['life-control-series-nonce'], plugin_basename( __FILE__ ) ) ) {
 			return;
 		}
 

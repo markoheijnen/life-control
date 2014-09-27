@@ -8,7 +8,7 @@ class Widget_Upcoming extends WP_Widget {
 		parent::__construct(
 			'life_control_upcoming', // Base ID
 			'Widget_Upcoming', // Name
-			array( 'description' => __( 'Shows latest and upcoming episode', 'my-series' ), ) // Args
+			array( 'description' => __( 'Shows latest and upcoming episode', 'life-control' ), ) // Args
 		);
 	}
 
@@ -106,12 +106,12 @@ class Widget_Upcoming extends WP_Widget {
 			$title = $instance[ 'title' ];
 		}
 		else {
-			$title = __( 'New title', 'my-series' );
+			$title = __( 'New title', 'life-control' );
 		}
 		?>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'my-series' ); ?></label> 
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'life-control' ); ?></label> 
 			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
 		</p>
 		<?php
@@ -136,7 +136,7 @@ class Widget_Upcoming extends WP_Widget {
 
 
 	public function load_episodeinfo( $tvrage_id ) {
-		if ( false === ( $return = get_transient( 'myseries_episodeinfo_' . $tvrage_id ) ) ) {
+		if ( false === ( $return = get_transient( 'lifecontrol_episodeinfo_' . $tvrage_id ) ) ) {
 			$url     = 'http://services.tvrage.com/feeds/episodeinfo.php?sid=' . $tvrage_id;
 			$request = wp_remote_get( $url );
 			$body    = wp_remote_retrieve_body( $request );
@@ -166,7 +166,7 @@ class Widget_Upcoming extends WP_Widget {
 						);
 					}
 
-					set_transient( 'myseries_episodeinfo_' . $tvrage_id, $return, DAY_IN_SECONDS );
+					set_transient( 'lifecontrol_episodeinfo_' . $tvrage_id, $return, DAY_IN_SECONDS );
 				}
 			}
 		}

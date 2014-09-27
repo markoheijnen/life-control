@@ -14,32 +14,32 @@ class Life_Control_Series {
 
 	public function register_post_type() {
 		$labels = array(
-			'name' => _x( 'Series', 'post type general name', 'my-series' ),
-			'singular_name' => _x( 'Serie', 'post type singular name', 'my-series' ),
-			'add_new' => _x( 'Add new', 'add new serie', 'my-series' ),
-			'add_new_item' => __( 'Add new serie', 'my-series' ),
-			'edit_item' => __( 'Edit serie', 'my-series' ),
-			'new_item' => __( 'New serie', 'my-series' ),
-			'all_items' => __( 'All series', 'my-series' ),
-			'view_item' => __( 'View serie', 'my-series' ),
-			'search_items' => __( 'Search series', 'my-series' ),
-			'not_found' => __( 'No series found', 'my-series' ),
+			'name'               => _x( 'Series', 'post type general name', 'my-series' ),
+			'singular_name'      => _x( 'Serie', 'post type singular name', 'my-series' ),
+			'add_new'            => _x( 'Add new', 'add new serie', 'my-series' ),
+			'add_new_item'       => __( 'Add new serie', 'my-series' ),
+			'edit_item'          => __( 'Edit serie', 'my-series' ),
+			'new_item'           => __( 'New serie', 'my-series' ),
+			'all_items'          => __( 'All series', 'my-series' ),
+			'view_item'          => __( 'View serie', 'my-series' ),
+			'search_items'       => __( 'Search series', 'my-series' ),
+			'not_found'          => __( 'No series found', 'my-series' ),
 			'not_found_in_trash' => __( 'No series found in trash', 'my-series' ), 
-			'parent_item_colon' => '',
-			'menu_name' => __( 'Series', 'my-series' )
+			'parent_item_colon'  => '',
+			'menu_name'          => __( 'Series', 'my-series' )
 		);
 
 		$args = array(
-			'labels' => $labels,
-			'public' => true,
+			'labels'             => $labels,
+			'public'             => true,
 			'publicly_queryable' => true,
-			'show_ui' => true, 
-			'show_in_menu' => true, 
-			'query_var' => true,
-			'rewrite' => array( 'slug' => 'series' ),
-			'has_archive' => true, 
-			'hierarchical' => false,
-			'supports' => array( 'title', 'editor', 'thumbnail' )
+			'show_ui'            => true, 
+			'show_in_menu'       => true, 
+			'query_var'          => true,
+			'rewrite'            => array( 'slug' => 'series' ),
+			'has_archive'        => true, 
+			'hierarchical'       => false,
+			'supports'           => array( 'title', 'editor', 'thumbnail' )
 		); 
 
 		register_post_type( 'serie', $args );
@@ -102,15 +102,16 @@ class Life_Control_Series {
 	}
 
 	public function wp_insert_post_data( $data, $postarr ) {
-		if( ! $data['post_title'] && isset( $_POST['imdb_id'] ) ) {
+		if ( ! $data['post_title'] && isset( $_POST['imdb_id'] ) ) {
 			$serie_data = $this->load_serie( $_POST['imdb_id'] );
 
-			if( $serie_data ) {
+			if ( $serie_data ) {
 				$data['post_title'] = $serie_data->Title;
 				$data['post_name']  = sanitize_title( $data['post_title'] );
 
-				if( ! $data['post_content'] )
+				if ( ! $data['post_content'] ) {
 					$data['post_content'] = $serie_data->Plot;
+				}
 
 				$this->extra_meta_data = array(
 					'released'  => $serie_data->Released,
@@ -125,14 +126,17 @@ class Life_Control_Series {
 	}
 
 	public function save_meta( $post_id, $post ) {
-		if ( ! isset( $_POST['my-series-series-nonce'] ) || ! wp_verify_nonce( $_POST['my-series-series-nonce'], plugin_basename( __FILE__ ) ) )
+		if ( ! isset( $_POST['my-series-series-nonce'] ) || ! wp_verify_nonce( $_POST['my-series-series-nonce'], plugin_basename( __FILE__ ) ) ) {
 			return;
+		}
 
-		if ( ! current_user_can( 'edit_post', $post_id ) )
+		if ( ! current_user_can( 'edit_post', $post_id ) ) {
 			return;
+		}
 
-		if( 'serie' != $post->post_type )
+		if ( 'serie' != $post->post_type ) {
 			return;
+		}
 
 
 		$imdb_id       = sanitize_text_field( $_POST['imdb_id'] );
@@ -143,13 +147,14 @@ class Life_Control_Series {
 		update_post_meta( $post_id, 'tvrage_id', $tvrage_id );
 		update_post_meta( $post_id, 'streamallthis_name', $streamallthis );
 
-		if( $this->extra_meta_data ) {
-			foreach( $this->extra_meta_data as $key => $value ) {
-				if( 'thumbnail' ) {
+		if ( $this->extra_meta_data ) {
+			foreach ( $this->extra_meta_data as $key => $value ) {
+				if ( 'thumbnail' ) {
 					$attachment_id = $this->load_thumbnail( $post_id, $value, $post->post_title );
 
-					if( $attachment_id )
+					if ( $attachment_id ) {
             			set_post_thumbnail( $post_id, $attachment_id );
+					}
 				}
 				else {
 					update_post_meta( $post_id, $key, $value );
@@ -157,7 +162,7 @@ class Life_Control_Series {
 			}
 		}
 
-		if( $tvrage_id ) {
+		if ( $tvrage_id ) {
 			$args = array(
 				'post_type'      => 'episode',
 				'post_parent'    => $post_id,
@@ -165,11 +170,11 @@ class Life_Control_Series {
 			);
 			$episodes = get_posts( $args );
 
-			if( ! $episodes ) {
+			if ( ! $episodes ) {
 				$episodes = $this->load_episodes( $tvrage_id );
 
-				if( $episodes ) {
-					foreach( $episodes as $episode ) {
+				if ( $episodes ) {
+					foreach ( $episodes as $episode ) {
 						$args = array(
 							'post_title'    => $post->post_title . ': ' . $episode['title'],
 							'post_content'  => '',
@@ -180,17 +185,18 @@ class Life_Control_Series {
 						);
 						$episode_id = wp_insert_post( $args );
 
-						if( ! is_wp_error( $episode_id ) ) {
+						if ( ! is_wp_error( $episode_id ) ) {
 							update_post_meta( $episode_id, 'season', $episode['season'] );
 							update_post_meta( $episode_id, 'episode', $episode['episode'] );
 
-							if( $streamallthis ) {
+							if ( $streamallthis ) {
 								$code     = sprintf( 's%02de%02d', $episode['season'] , $episode['episode'] );
 								$url      = 'http://streamallthis.me/watch/' . $streamallthis . '/' . $code . '.html';
 								$response = wp_remote_head( $url );
 
-								if( ! is_wp_error( $response ) && 200 == wp_remote_retrieve_response_code( $response )  )
+								if ( ! is_wp_error( $response ) && 200 == wp_remote_retrieve_response_code( $response )  ) {
 									update_post_meta( $episode_id, 'streamallthis', $url );
+								}
 							}
 						}
 					}
@@ -206,10 +212,10 @@ class Life_Control_Series {
 		$request = wp_remote_get( $url );
 		$body    = wp_remote_retrieve_body( $request );
 
-		if( $body ) {
+		if ( $body ) {
 			$data = json_decode( $body );
 
-			if( $data ) {
+			if ( $data ) {
 				return $data;
 			}
 		}
@@ -222,14 +228,14 @@ class Life_Control_Series {
 		$request = wp_remote_get( $url );
 		$body    = wp_remote_retrieve_body( $request );
 
-		if( $body ) {
+		if ( $body ) {
 			$data = simplexml_load_string( $body );
 
-			if( $data ) {
+			if ( $data ) {
 				$episodes = array();
 
-				foreach( $data->Episodelist->Season as $season ) {
-					foreach( $season->episode as $episode ) {
+				foreach ( $data->Episodelist->Season as $season ) {
+					foreach ( $season->episode as $episode ) {
 						$episodes[] = array(
 							'season'    => (int)    $season['no'],
 							'episode'   => (int)    $episode->seasonnum,
@@ -257,8 +263,10 @@ class Life_Control_Series {
 			// Set variables for storage
 			// fix file filename for query strings
 			preg_match('/[^\?]+\.(jpg|JPG|jpe|JPE|jpeg|JPEG|gif|GIF|png|PNG)/', $url, $matches);
-			if( isset( $matches[0] ) )
+
+			if( isset( $matches[0] ) ) {
 				$file_array['name']     = basename( $matches[0] );
+			}
 
 			$file_array['tmp_name'] = $tmp;
 
@@ -271,8 +279,9 @@ class Life_Control_Series {
 			// do the validation and storage stuff
 			$id = media_handle_sideload( $file_array, $post_id, $desc );
 
-			if ( ! is_wp_error( $id ) )
+			if ( ! is_wp_error( $id ) ) {
 				return $id;
+			}
 
 			// If error storing permanently, unlink
 			@unlink( $file_array['tmp_name'] );

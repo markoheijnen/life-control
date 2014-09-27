@@ -28,7 +28,7 @@ class Life_Control {
 
 		new Life_Control_Watched;
 
-		if( is_admin() ) {
+		if ( is_admin() ) {
 			$this->update();
 		}
 	}

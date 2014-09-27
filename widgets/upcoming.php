@@ -25,8 +25,9 @@ class Widget_Upcoming extends WP_Widget {
 
 		echo $args['before_widget'];
 
-		if ( ! empty( $title ) )
+		if ( ! empty( $title ) ) {
 			echo $args['before_title'] . $title . $args['after_title'];
+		}
 
 		$query_args = array(
 			'post_type'      => 'serie',
@@ -34,13 +35,13 @@ class Widget_Upcoming extends WP_Widget {
 		);
 		$series = get_posts( $query_args );
 
-		foreach( $series as $serie ) {
+		foreach ( $series as $serie ) {
 			echo '<h2 style="font-size: 12px">' . $serie->post_title . '</h2>';
 
 			$tvrage_id    = get_post_meta( $serie->ID, 'tvrage_id', true );
 			$episode_data = $this->load_episodeinfo( $tvrage_id );
 
-			if( $episode_data ) {
+			if ( $episode_data ) {
 				$exploded = explode( 'x', $episode_data['latest']['number'] );
 				$query_args = array(
 					'post_type'      => 'episode',
@@ -61,19 +62,21 @@ class Widget_Upcoming extends WP_Widget {
 
 				echo '<p>';
 
-				if( isset( $latest_episode[0] ) )
+				if ( isset( $latest_episode[0] ) ) {
 					echo '<a href="' . get_permalink( $latest_episode[0]->ID ) . '">';
+				}
 
 				echo $episode_data['latest']['title'] . '(' . $episode_data['latest']['number'] . ')<br/>';
 				echo $episode_data['latest']['date'];
 
 
-				if( isset( $latest_episode[0] ) )
+				if ( isset( $latest_episode[0] ) ) {
 					echo '</a>';
+				}
 
 				echo '</p>';
 
-				if( isset( $episode_data['next'] ) ) {
+				if ( isset( $episode_data['next'] ) ) {
 					echo '<p>';
 					echo $episode_data['next']['title'] . '(' . $episode_data['next']['number'] . ')<br/>';
 					echo $episode_data['next']['date'];
@@ -106,11 +109,12 @@ class Widget_Upcoming extends WP_Widget {
 			$title = __( 'New title', 'my-series' );
 		}
 		?>
+
 		<p>
-		<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'my-series' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'my-series' ); ?></label> 
+			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
 		</p>
-		<?php 
+		<?php
 	}
 
 	/**
@@ -137,11 +141,11 @@ class Widget_Upcoming extends WP_Widget {
 			$request = wp_remote_get( $url );
 			$body    = wp_remote_retrieve_body( $request );
 
-			if( $body ) {
+			if ( $body ) {
 				$data   = simplexml_load_string( $body );
 				$return = array();
 
-				if( $data ) {
+				if ( $data ) {
 					$return = array(
 						'status' => (string) $data->status,
 						'latest' => array(
@@ -151,7 +155,7 @@ class Widget_Upcoming extends WP_Widget {
 						)
 					);
 
-					if( isset( $data->nextepisode ) ) {
+					if ( isset( $data->nextepisode ) ) {
 						$timestamp = $data->nextepisode->xpath('airtime[@format="GMT+0 NODST"]');
 
 						$return['next'] = array(

@@ -9,32 +9,32 @@ class Life_Control_Episodes {
 
 	public function register_post_type() {
 		$labels = array(
-			'name' => _x( 'Episodes', 'post type general name', 'my-series' ),
-			'singular_name' => _x( 'Episode', 'post type singular name', 'my-series' ),
-			'add_new' => _x( 'Add new', 'add new episode', 'my-series' ),
-			'add_new_item' => __( 'Add new episode', 'my-series' ),
-			'edit_item' => __( 'Edit episode', 'my-series' ),
-			'new_item' => __( 'New episode', 'my-series' ),
-			'all_items' => __( 'All episodes', 'my-series' ),
-			'view_item' => __( 'View episode', 'my-series' ),
-			'search_items' => __( 'Search episodes', 'my-series' ),
-			'not_found' => __( 'No episodes found', 'my-series' ),
+			'name'               => _x( 'Episodes', 'post type general name', 'my-series' ),
+			'singular_name'      => _x( 'Episode', 'post type singular name', 'my-series' ),
+			'add_new'            => _x( 'Add new', 'add new episode', 'my-series' ),
+			'add_new_item'       => __( 'Add new episode', 'my-series' ),
+			'edit_item'          => __( 'Edit episode', 'my-series' ),
+			'new_item'           => __( 'New episode', 'my-series' ),
+			'all_items'          => __( 'All episodes', 'my-series' ),
+			'view_item'          => __( 'View episode', 'my-series' ),
+			'search_items'       => __( 'Search episodes', 'my-series' ),
+			'not_found'          => __( 'No episodes found', 'my-series' ),
 			'not_found_in_trash' => __( 'No episodes found in trash', 'my-series' ), 
-			'parent_item_colon' => '',
-			'menu_name' => __( 'Episodes', 'my-series' )
+			'parent_item_colon'  => '',
+			'menu_name'          => __( 'Episodes', 'my-series' )
 		);
 
 		$args = array(
-			'labels' => $labels,
-			'public' => true,
+			'labels'             => $labels,
+			'public'             => true,
 			'publicly_queryable' => true,
-			'show_ui' => true, 
-			'show_in_menu' => true, 
-			'query_var' => true,
-			'rewrite' => array( 'slug' => 'episodes' ),
-			'has_archive' => true, 
-			'hierarchical' => false,
-			'supports' => array( 'title', 'editor', 'thumbnail', 'custom-fields' )
+			'show_ui'            => true, 
+			'show_in_menu'       => true, 
+			'query_var'          => true,
+			'rewrite'            => array( 'slug' => 'episodes' ),
+			'has_archive'        => true, 
+			'hierarchical'       => false,
+			'supports'           => array( 'title', 'editor', 'thumbnail', 'custom-fields' )
 		); 
 
 		register_post_type( 'episode', $args );

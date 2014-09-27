@@ -1,6 +1,6 @@
 <?php
 
-class My_Series_Series {
+class Life_Control_Series {
 	private $extra_meta_data;
 
 	public function __construct() {

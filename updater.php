@@ -1,6 +1,6 @@
 <?php
 
-class My_Series_Updater {
+class Life_Control_Updater {
 
 	public function __construct() {
 		//$this->check_empty_streamallthis();

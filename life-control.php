@@ -23,13 +23,14 @@ class Life_Control {
 
 		add_action( 'widgets_init', array( $this, 'register_widgets' ) );
 
-		$this->series   = new My_Series_Series;
-		$this->episodes = new My_Series_Episodes;
+		$this->series   = new Life_Control_Series;
+		$this->episodes = new Life_Control_Episodes;
 
-		new My_Series_Watched;
+		new Life_Control_Watched;
 
-		if( is_admin() )
+		if( is_admin() ) {
 			$this->update();
+		}
 	}
 
 
@@ -50,7 +51,7 @@ class Life_Control {
 	public function update() {
 		include 'updater.php';
 
-		$updater = new My_Series_Updater;
+		$updater = new Life_Control_Updater;
 	}
 
 }

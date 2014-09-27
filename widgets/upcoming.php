@@ -6,7 +6,7 @@ class Widget_Upcoming extends WP_Widget {
 	 */
 	function __construct() {
 		parent::__construct(
-			'my_series_upcoming', // Base ID
+			'life_control_upcoming', // Base ID
 			'Widget_Upcoming', // Name
 			array( 'description' => __( 'Shows latest and upcoming episode', 'my-series' ), ) // Args
 		);

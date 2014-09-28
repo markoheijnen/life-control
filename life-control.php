@@ -17,6 +17,7 @@ include 'inc/watched.php';
 class Life_Control {
 	private $episodes;
 	private $series;
+	private $updater;
 
 	public function __construct() {
 		register_activation_hook( __FILE__, array( $this, 'activation' ) );
@@ -51,7 +52,7 @@ class Life_Control {
 	public function update() {
 		include 'updater.php';
 
-		$updater = new Life_Control_Updater;
+		$this->updater = new Life_Control_Updater;
 	}
 
 }

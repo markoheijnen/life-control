@@ -45,6 +45,7 @@ class Life_Control {
 
 	public function register_widgets() {
 		include 'widgets/upcoming.php';
+
 		register_widget( 'Widget_Upcoming' );
 	}
 

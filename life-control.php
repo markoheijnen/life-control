@@ -15,17 +15,17 @@ include 'posttypes/series.php';
 include 'inc/watched.php';
 
 class Life_Control {
-	private $episodes;
-	private $series;
-	private $updater;
+	public static $episodes;
+	public static $series;
+	public static $updater;
 
 	public function __construct() {
 		register_activation_hook( __FILE__, array( $this, 'activation' ) );
 
 		add_action( 'widgets_init', array( $this, 'register_widgets' ) );
 
-		$this->series   = new Life_Control_Series;
-		$this->episodes = new Life_Control_Episodes;
+		self::$series   = new Life_Control_Series;
+		self::$episodes = new Life_Control_Episodes;
 
 		new Life_Control_Watched;
 
@@ -53,7 +53,7 @@ class Life_Control {
 	public function update() {
 		include 'inc/updater.php';
 
-		$this->updater = new Life_Control_Updater;
+		self::$updater = new Life_Control_Updater;
 	}
 
 }

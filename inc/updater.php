@@ -60,8 +60,8 @@ class Life_Control_Updater {
 			// fix file filename for query strings
 			preg_match('/[^\?]+\.(jpg|JPG|jpe|JPE|jpeg|JPEG|gif|GIF|png|PNG)/', $url, $matches);
 
-			if( isset( $matches[0] ) ) {
-				$file_array['name']     = basename( $matches[0] );
+			if ( isset( $matches[0] ) ) {
+				$file_array['name'] = basename( $matches[0] );
 			}
 
 			$file_array['tmp_name'] = $tmp;

@@ -51,7 +51,7 @@ class Life_Control {
 
 
 	public function update() {
-		include 'updater.php';
+		include 'inc/updater.php';
 
 		$this->updater = new Life_Control_Updater;
 	}
